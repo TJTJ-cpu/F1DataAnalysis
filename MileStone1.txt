@@ -1,0 +1,24 @@
+
+Milestone 1 - Research
+
+Due Tuesday by 23:59 Points 1 Submitting a file upload File types pdf
+
+For milestone 1 in the research phase a more in-depth proposal of the project is developed:
+
+- Do a risk analysis: Are there any possible (technical) problems/showstoppers
+- Are there any external resources required, how will you get hold of them
+- Perform tests, look for similar projects, is your idea feasible in the time frame
+- Find additional external references
+- What will you deliver?
+- What will you present during the final presentation?
+
+After this phase there can be no more unknown factors in your project!
+
+Submission is a document with:
+1. (Rewritten) abstract of your project
+2. Risk analysis
+3. Description of the tests performed
+4. Rough time planning with week granularity
+5. Description of the deliveries
+
+
