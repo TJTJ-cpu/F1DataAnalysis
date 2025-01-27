@@ -1,0 +1,4 @@
+# how to change the date format
+# pd = pandas
+pd.to_datetime(DataName_name['date_format_name']).dt.strftime('%d-%m-%Y')
+
