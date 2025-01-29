@@ -64,7 +64,7 @@ def GetSprintData(sessionKey, driverNum = None):
 
 def GetWeatherData(sessionKey):
     url = f'https://api.openf1.org/v1/weather?session_key={sessionKey}'
-    return DataUtlis.ConvertTimeToSecond(UrlToDataFrame(url), 'date')
+    return DataUtlis.FormatTime_HHMMSS(UrlToDataFrame(url), 'date')
 
 def GetTeamRadioData(sessionKey, driverNum = None):
     if driverNum is None:
