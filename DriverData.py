@@ -1,5 +1,4 @@
 from DataUtlis import *
-import DataUtlis
     
 
 def GetDriverName(driverNum, sessionKey):

@@ -1,4 +1,42 @@
+--------------------------------------------------
+
+!! NOTE !!
+
 # how to change the date format
 # pd = pandas
 pd.to_datetime(DataName_name['date_format_name']).dt.strftime('%d-%m-%Y')
+
+--------------------------------------------------
+
+!! TO CODE LIST !!
+
+Func that can change the time format
+
+Func that remove some column 
+
+Func that add column if they belong to each other
+
+--------------------------------------------------
+
+!! TO DO LIST !!
+
+- Restructure The Code
+
+
+--------------------------------------------------
+
+!! ORGANIZATION !!
+
+Data Utilities
+- Export to excel
+- Data Variable Format
+
+API Utilities
+- All API Function
+- Handle Error
+- Manipulate the Url
+
+Config
+- All the links related to API
+- Store Race Session Keys and Meeting Key
 

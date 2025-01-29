@@ -1,6 +1,6 @@
 from DataUtlis import *
+from DriverData import GetDriverData
 import DataUtlis
-import DriverData
 
 meeting_code = 1244
 meeting_key = f'meeting_key={meeting_code}'
@@ -11,11 +11,8 @@ driverKey = f'driver_number={driverNumber}'
 sessionCode = 9590
 sessionKey = f'session_key={sessionCode}'
 
-
-driverName = DriverData.GetDriverData(driverNumber, sessionCode)
-
-allSess = GetAllSessionCode(2024)
-ExportToExcel('RaceKey', allSess)
-print(allSess)
-
+dt = GetCarData(driverNumber, sessionCode)
+dt = dt[['driver_number', 'date', 'n_gear', 'rpm', 'speed']]
+ExportToExcel('CarData', dt)
+print(dt)
 
