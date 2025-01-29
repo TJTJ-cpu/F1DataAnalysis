@@ -30,6 +30,7 @@ Func that add column if they belong to each other
 Data Utilities
 - Export to excel
 - Data Variable Format
+- Change the SegmentSector num to str (yellow, purple, green, or other)
 
 API Utilities
 - All API Function

@@ -2,19 +2,12 @@ from urllib.request import urlopen
 import pandas as pd
 import json
 
-from pandas.core.common import consensus_name_attr
-import DataUtlis
-import DriverData
-
-
-from pandas.core.methods.describe import describe_numeric_1d
-
 
 def ExportToExcel(fileName, Data):
     Data.to_excel(f'{fileName}.xlsx', index=False)
 
 
-def GetCarData(dNum, sessKey):
+def GetCarData2(dNum, sessKey):
     url = f'https://api.openf1.org/v1/car_data?driver_number={dNum}&session_key={sessKey}&speed>=315'
 
     dt = UrlToDataFrame(url)
@@ -50,7 +43,17 @@ def GetPosition(sKey, dNum):
     Data  = pd.DataFrame(dt)
     return Data
 
+def ConverTimeToddmmyyyy(data, cName):
+    data[cName] = pd.to_datetime(data[cName]).dt.strftime('%d-%m-%y')
+    return data
+
 def ConvertTimeToSecond(data, cName):
     data[cName] = pd.to_datetime(data[cName]).dt.strftime('%H:%M:%S.%f').str[:-3]
     return data
+
+def RemoveDulplicate(data, cName):
+    return data.drop_duplicates(subset=[cName])
+
+# Make a func that filter out a certain type
+# def FilterOut(data, cName, cVal):
 
