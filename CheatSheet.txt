@@ -20,7 +20,10 @@ Func that add column if they belong to each other
 
 !! TO DO LIST !!
 
+Random Session Key
+Key Winner and Their Data 
 
+Try Catch ? 
 
 --------------------------------------------------
 

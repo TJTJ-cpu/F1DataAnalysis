@@ -1,6 +1,10 @@
 from DataUtlis import *
 import DataUtlis
+import random
+import numpy as np
     
+
+#################### Getting Data From API ####################
 
 def GetCarData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/car_data?driver_number={driverNum}&session_key={sessionKey}'
@@ -73,5 +77,30 @@ def GetTeamRadioData(sessionKey, driverNum = None):
         url = f'https://api.openf1.org/v1/team_radio?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
+#################### Costumized Function ####################
+
+def GetTrackData(sessionKey):
+    url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'
+    dt = UrlToDataFrame(url)
+    dt = dt[['date_start', 'country_name', 'circuit_short_name', 'year']]
+    return DataUtlis.FormatDate_DDMMYY(dt, 'date_start')
+
+def RandomSessionKey():
+    year = [2024, 2023]
+    dt = GetSessionData(random.choice(year), 'Race')
+    return random.choice(dt['session_key'].to_numpy())
+
+def GetAllSessionKey():
+    keys = []
+    temp = []
+    dt1 = GetSessionData(2023, 'Race')
+    # keys.append(dt['session_key'].to_numpy)
+    dt2 = GetSessionData(2024, 'Race')
+    # keys.append(dt['session_key'].to_numpy)
+    dt = dt1._append(dt2, ignore_index=True)
+    temp.append(dt['session_key'].values.tolist())
+    for key in temp[0]:
+        keys.append(key)
+    return keys
 
 
