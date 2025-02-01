@@ -25,12 +25,28 @@ keys = ApiUtlis.GetAllSessionKey()
 #     dt = DataUtlis.FormatTime_HHMMSS(data, 'date')
 #     DataUtlis.ExportPositionData(dt, key)
 
-# key = random.choice(keys)
+key = random.choice(keys)
 # dt = ApiUtlis.GetSessionData(2024, 'Qualifying')
+
+qualiExample = 9562
+
+# print(ApiUtlis.GetTrackData(qualiExample))
+
+dt = ApiUtlis.GetQualifyPosition(qualiExample)
+dt = dt[['driver_number', 'position']]
 # print(dt)
 
-pos = ApiUtlis.GetPositionData(9468)
-print(pos)
+dn = ApiUtlis.GetDriverData(qualiExample)
+# print(dn.columns)
+test = dn[['driver_number', 'broadcast_name']]
+# print(test)
+
+merge = DataUtlis.MergeDataFrame(test, dt, 'driver_number')
+merge = merge.sort_values('position')
+print(merge)
+
+# pos = ApiUtlis.GetPositionData(9468)
+# print(pos)
 
 # Get everything
 # for key in keys:

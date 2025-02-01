@@ -10,8 +10,11 @@ def GetCarData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/car_data?driver_number={driverNum}&session_key={sessionKey}'
     return UrlToDataFrame(url)
 
-def GetDriverData(sessionKey, driverNum):
-    url = f'https://api.openf1.org/v1/drivers?driver_number={driverNum}&session_key={sessionKey}'
+def GetDriverData(sessionKey, driverNum=None):
+    if driverNum:
+        url = f'https://api.openf1.org/v1/drivers?driver_number={driverNum}&session_key={sessionKey}'
+    else:
+        url = f'https://api.openf1.org/v1/drivers?session_key={sessionKey}'
     return UrlToDataFrame(url)
 
 def GetIntervalData(sessionKey, driverNum):
@@ -104,6 +107,14 @@ def GetAllSessionKey(year=None):
     for key in temp[0]:
         keys.append(key)
     return keys
+
+def GetQualifyPosition(sessionKey):
+    dt = ApiUtlis.GetPositionData(sessionKey)
+    dt = dt.sort_values('date')
+    final = dt.groupby('driver_number').last().reset_index()
+    final.index += 1
+    return final.sort_values('position')
+
 
 #################### All Data ####################
 

@@ -1,11 +1,15 @@
 from urllib.request import HTTPError, urlopen
 from urllib.error import HTTPError
 import pandas as pd
+from pandas.core.common import consensus_name_attr
 import ApiUtlis
 import time
 import json
 import os
 
+
+
+#################### Exporting Tools  ####################
 
 def ExportToExcel(fileName, Data, SubFolder=None):
     if SubFolder:
@@ -30,7 +34,13 @@ def ExportPositionData(dt, key):
     final = dtSorted.groupby('driver_number').last().reset_index()
     final = final.sort_values('position')
     ExportToExcel(fileName, final, 'Data')
+
+#################### Data Manipulating  ####################
     
+def MergeDataFrame(dt1, dt2, cName):
+    return pd.merge(dt1, dt2, on=cName,how='right')
+
+#################### ExportingTools  ####################
 
 def UrlToDataFrame(url, retries=5, waitFactor=2):
     for attemp in range(retries):
@@ -49,6 +59,8 @@ def UrlToDataFrame(url, retries=5, waitFactor=2):
             else:
                 raise
     raise Exception("Exceeded maximum retries due to rate limiting")
+
+#################### Date Formatting ####################
 
 def FormatDate_DDMMYY(data, cName):
     data[cName] = pd.to_datetime(data[cName]).dt.strftime('%d-%m-%y')
