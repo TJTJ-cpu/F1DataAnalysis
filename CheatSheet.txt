@@ -20,6 +20,22 @@ Func that add column if they belong to each other
 
 !! TO DO LIST !!
 
+Generate A Table
+- Driver Data
+- Circuit
+- Year
+- Position
+- Speed
+- Qualifying Position
+- Pit Duration
+- Tyre Compound
+- Weather
+- Qualifying Position (SessionData)
+
+
+
+Compare Two Val
+
 Func that return r val and possible display some image
 
 --------------------------------------------------

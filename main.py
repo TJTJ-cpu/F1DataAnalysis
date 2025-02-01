@@ -20,11 +20,17 @@ sessionKey = f'session_key={sessionCode}'
 keys = ApiUtlis.GetAllSessionKey()
 
 # Export All PositionData
-for key in keys:
-    data = ApiUtlis.GetPositionData(key)
-    dt = DataUtlis.FormatTime_HHMMSS(data, 'date')
-    DataUtlis.ExportPositionData(dt, key)
+# for key in keys:
+#     data = ApiUtlis.GetPositionData(key)
+#     dt = DataUtlis.FormatTime_HHMMSS(data, 'date')
+#     DataUtlis.ExportPositionData(dt, key)
 
+# key = random.choice(keys)
+# dt = ApiUtlis.GetSessionData(2024, 'Qualifying')
+# print(dt)
+
+pos = ApiUtlis.GetPositionData(9468)
+print(pos)
 
 # Get everything
 # for key in keys:
