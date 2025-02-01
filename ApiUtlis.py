@@ -86,21 +86,36 @@ def GetTrackData(sessionKey):
     return DataUtlis.FormatDate_DDMMYY(dt, 'date_start')
 
 def RandomSessionKey():
-    year = [2024, 2023]
+    # year = [2024, 2023]
+    year = [2023]
     dt = GetSessionData(random.choice(year), 'Race')
     return random.choice(dt['session_key'].to_numpy())
 
-def GetAllSessionKey():
+def GetAllSessionKey(year=None):
     keys = []
     temp = []
-    dt1 = GetSessionData(2023, 'Race')
-    # keys.append(dt['session_key'].to_numpy)
-    dt2 = GetSessionData(2024, 'Race')
-    # keys.append(dt['session_key'].to_numpy)
-    dt = dt1._append(dt2, ignore_index=True)
+    if year:
+        dt = GetSessionData(year, 'Race')
+    else:
+        dt1 = GetSessionData(2023, 'Race')
+        dt2 = GetSessionData(2024, 'Race')
+        dt = dt1._append(dt2, ignore_index=True)
     temp.append(dt['session_key'].values.tolist())
     for key in temp[0]:
         keys.append(key)
     return keys
+
+#################### All Data ####################
+
+def GetAllTrackData():
+    keys = GetAllSessionKey()
+    print(keys)
+    tk = []
+    for key in keys:
+        dt = GetTrackData(key)
+        tk.append(dt)
+        time.sleep(0.2)
+    return pd.concat(tk, ignore_index=True)
+
 
 

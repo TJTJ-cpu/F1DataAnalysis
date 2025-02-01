@@ -1,9 +1,11 @@
+from ssl import ALERT_DESCRIPTION_CERTIFICATE_UNKNOWN
 import pandas as pd
 import numpy as np
-import DataUtlis  
+
 import ApiUtlis
 import DataUtlis
 import time
+import random
 
 meeting_code = 1244
 meeting_key = f'meeting_key={meeting_code}'
@@ -15,17 +17,20 @@ sessionCode = 9590
 sessionKey = f'session_key={sessionCode}'
 
 
-tk = []
 keys = ApiUtlis.GetAllSessionKey()
 
-# ts = [1,2,3,4]
-# print(ts[0])
-
-
+# Export All PositionData
 for key in keys:
-    dt = ApiUtlis.GetTrackData(key)
-    tk.append(dt)
-    time.sleep(0.2)
+    data = ApiUtlis.GetPositionData(key)
+    dt = DataUtlis.FormatTime_HHMMSS(data, 'date')
+    DataUtlis.ExportPositionData(dt, key)
+
+
+# Get everything
+# for key in keys:
+#     dt = ApiUtlis.GetTrackData(key)
+#     tk.append(dt)
+#     time.sleep(0.2)
 
 # for x in range(10):
 #     dt = ApiUtlis.GetSessionData(2023, 'Race')
@@ -34,8 +39,7 @@ for key in keys:
 #     dt = ApiUtlis.GetTrackData(key)
 #     tk.append(dt)
 
-tracks = pd.concat(tk, ignore_index=True)
-print(tracks)
+
 
 # DataUtlis.ExportToExcel('F1Data', dt)
 # print(dt)
