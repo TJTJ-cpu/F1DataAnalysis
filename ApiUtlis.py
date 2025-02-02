@@ -80,6 +80,11 @@ def GetTeamRadioData(sessionKey, driverNum = None):
         url = f'https://api.openf1.org/v1/team_radio?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
+def GetSessionType(sessionKey):
+    url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'
+    dt = UrlToDataFrame(url)
+    return dt['session_type'][0]
+
 #################### Costumized Function ####################
 
 def GetTrackData(sessionKey):
@@ -114,7 +119,6 @@ def GetQualifyPosition(sessionKey):
     final = dt.groupby('driver_number').last().reset_index()
     final.index += 1
     return final.sort_values('position')
-
 
 #################### All Data ####################
 

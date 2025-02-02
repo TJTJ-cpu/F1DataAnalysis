@@ -34,15 +34,17 @@ qualiExample = 9562
 
 dt = ApiUtlis.GetQualifyPosition(qualiExample)
 dt = dt[['driver_number', 'position']]
-# print(dt)
+dt = DataUtlis.ResetIndex(dt)
+
+qType = ApiUtlis.GetSessionType(qualiExample)
+dt = DataUtlis.AddNewColumn(dt, qType, 'session_type')
+dt = DataUtlis.SetIndex(dt, 'position')
 
 dn = ApiUtlis.GetDriverData(qualiExample)
-# print(dn.columns)
 test = dn[['driver_number', 'broadcast_name']]
-# print(test)
 
 merge = DataUtlis.MergeDataFrame(test, dt, 'driver_number')
-merge = merge.sort_values('position')
+# merge = DataUtlis.MoveColumn(dt, 0, 'session_type')
 print(merge)
 
 # pos = ApiUtlis.GetPositionData(9468)

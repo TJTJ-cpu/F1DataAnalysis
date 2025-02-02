@@ -33,7 +33,6 @@ Generate A Table
 - Qualifying Position (SessionData)
 
 
-
 Compare Two Val
 
 Func that return r val and possible display some image

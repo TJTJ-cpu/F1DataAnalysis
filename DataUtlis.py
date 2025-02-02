@@ -40,7 +40,26 @@ def ExportPositionData(dt, key):
 def MergeDataFrame(dt1, dt2, cName):
     return pd.merge(dt1, dt2, on=cName,how='right')
 
-#################### ExportingTools  ####################
+def AddNewColumn(data, val, cName ):
+    data[cName] = val
+    return data
+
+def ResetIndex(data):
+    return data.reset_index(drop=True)
+
+def MoveColumn(data, index, cName):
+    column = data.pop(cName)
+    data.insert(index, cName ,column)
+    return data
+
+def SetIndex(data, cName):
+    data.set_index(cName, inplace=True)
+    return data
+
+# def GetAddColumnApi(sessionKey, cName):
+
+
+#################### ExportingTools ####################
 
 def UrlToDataFrame(url, retries=5, waitFactor=2):
     for attemp in range(retries):
