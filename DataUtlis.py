@@ -1,12 +1,44 @@
 from urllib.request import HTTPError, urlopen
 from urllib.error import HTTPError
 import pandas as pd
-from pandas.core.common import consensus_name_attr
+import matplotlib.pyplot as plt
+
 import ApiUtlis
+import Algorithm
 import time
 import json
 import os
 
+
+
+
+#################### Data Manipulating  ####################
+    
+def MergeDataFrame(dt1, dt2, cName):
+    return pd.merge(dt1, dt2, on=cName,how='right')
+
+def AddNewColumn(data, val, cName ):
+    data[cName] = val
+    return data
+
+def ResetIndex(data):
+    return data.reset_index(drop=True)
+
+def MoveColumn(data, index, cName):
+    column = data.pop(cName)
+    data.insert(index, cName ,column)
+    return data
+
+def SetIndex(data, cName):
+    dt = data.set_index(cName, inplace=True)
+    return dt
+
+def ColumnToArray(dt, cName):
+    foo = dt[cName].to_numpy()
+    return foo
+
+# NEED TO RESTRUCTURE THE FUNC 
+# def GetAddColumnApi(sessionKey, cName):
 
 
 #################### Exporting Tools  ####################
@@ -35,32 +67,6 @@ def ExportPositionData(dt, key):
     final = final.sort_values('position')
     ExportToExcel(fileName, final, 'Data')
 
-#################### Data Manipulating  ####################
-    
-def MergeDataFrame(dt1, dt2, cName):
-    return pd.merge(dt1, dt2, on=cName,how='right')
-
-def AddNewColumn(data, val, cName ):
-    data[cName] = val
-    return data
-
-def ResetIndex(data):
-    return data.reset_index(drop=True)
-
-def MoveColumn(data, index, cName):
-    column = data.pop(cName)
-    data.insert(index, cName ,column)
-    return data
-
-def SetIndex(data, cName):
-    data.set_index(cName, inplace=True)
-    return data
-
-# def GetAddColumnApi(sessionKey, cName):
-
-
-#################### ExportingTools ####################
-
 def UrlToDataFrame(url, retries=5, waitFactor=2):
     for attemp in range(retries):
         try:
@@ -79,6 +85,12 @@ def UrlToDataFrame(url, retries=5, waitFactor=2):
                 raise
     raise Exception("Exceeded maximum retries due to rate limiting")
 
+#################### Data Visualization ####################
+
+def ScatterPlot(df, val1, val2):
+    df.plot.scatter(x=val1, y=val2)
+
+
 #################### Date Formatting ####################
 
 def FormatDate_DDMMYY(data, cName):
@@ -96,6 +108,13 @@ def RemoveDulplicate(data, cName):
 def RemoveRowIfZero(data, cName, val=0):
     # Remove the val that is 0
     data = data.drop(data[data[cName] == val].index)
+    # Reset the index
+    data = data[data[cName] != 0].reset_index(drop=True)
+    return data
+
+def RemoveRowIfNan(data, cName):
+    # Remove the val that is 0
+    data = data.drop(data[data[cName] == None].index)
     # Reset the index
     data = data[data[cName] != 0].reset_index(drop=True)
     return data

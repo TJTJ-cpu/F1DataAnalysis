@@ -1,78 +1,69 @@
-from ssl import ALERT_DESCRIPTION_CERTIFICATE_UNKNOWN
 import pandas as pd
 import numpy as np
+from pandas.core.series import algorithms
 
+import matplotlib.pyplot as plt
+
+import Algorithm
 import ApiUtlis
 import DataUtlis
 import time
 import random
 
-meeting_code = 1244
-meeting_key = f'meeting_key={meeting_code}'
-
-driverNumber = 16
-driverKey = f'driver_number={driverNumber}'
-
-sessionCode = 9590
-sessionKey = f'session_key={sessionCode}'
-
-
 keys = ApiUtlis.GetAllSessionKey()
-
-# Export All PositionData
-# for key in keys:
-#     data = ApiUtlis.GetPositionData(key)
-#     dt = DataUtlis.FormatTime_HHMMSS(data, 'date')
-#     DataUtlis.ExportPositionData(dt, key)
-
 key = random.choice(keys)
-# dt = ApiUtlis.GetSessionData(2024, 'Qualifying')
 
-qualiExample = 9562
-
-# print(ApiUtlis.GetTrackData(qualiExample))
-
-dt = ApiUtlis.GetQualifyPosition(qualiExample)
+dt = ApiUtlis.GetQualifyPosition(key)
 dt = dt[['driver_number', 'position']]
 dt = DataUtlis.ResetIndex(dt)
 
-qType = ApiUtlis.GetSessionType(qualiExample)
-dt = DataUtlis.AddNewColumn(dt, qType, 'session_type')
-dt = DataUtlis.SetIndex(dt, 'position')
+val = ApiUtlis.GetSessionType(key)
+dt = DataUtlis.AddNewColumn(dt, val, 'session_type')
 
-dn = ApiUtlis.GetDriverData(qualiExample)
-test = dn[['driver_number', 'broadcast_name']]
+dn = ApiUtlis.GetDriverData(key)
+driverName = dn[['driver_number', 'name_acronym']]
 
-merge = DataUtlis.MergeDataFrame(test, dt, 'driver_number')
-# merge = DataUtlis.MoveColumn(dt, 0, 'session_type')
-print(merge)
+pos = ApiUtlis.GetPosition(key)
+track = ApiUtlis.GetTrackData(key)
 
-# pos = ApiUtlis.GetPositionData(9468)
+# driver = ApiUtlis.RandomDriver(key)
+# driverlapDura = ApiUtlis.DriverLapDuration(key, driver['driver_number'])
+
+# print(track)
 # print(pos)
+dt = pos
+posArr = []
+duraArr = []
 
-# Get everything
-# for key in keys:
-#     dt = ApiUtlis.GetTrackData(key)
-#     tk.append(dt)
-#     time.sleep(0.2)
-
-# for x in range(10):
-#     dt = ApiUtlis.GetSessionData(2023, 'Race')
-#     arr = dt['session_key'].to_numpy()
-#     key = ApiUtlis.RandomSessionKey()
-#     dt = ApiUtlis.GetTrackData(key)
-#     tk.append(dt)
+data = [[12, 42], [13, 46], [14, 48], [15, 52], [16, 54], [17, 54], [18, 57], [19, 57], [20, 58]]
+df = pd.DataFrame(data, columns=['Age', 'Weight'])
 
 
+# r = Algorithm.PearsonCorrelation(df, 'Age', 'Weight')
+# print(r)
 
-# DataUtlis.ExportToExcel('F1Data', dt)
-# print(dt)
+# print(df)
+
+for index, row in pos.iterrows():
+    driverNum = row.iloc[0]
+    position = row.iloc[1]
+    dura = ApiUtlis.DriverLapDuration(key, driverNum)
+    duraArr.append(dura)
+    # print(f'num: {driverNum}   pos: {position}   dura: {dura}')
+
+print(track)
+
+dt['duration'] = duraArr
+vis =dt.plot.scatter(x='position', y='duration')
+print(dt)
+r = Algorithm.PearsonCorrelation(dt, 'position', 'duration')
+print(f'r val: {r}')
+
+plt.show()
+
+# print(pos)
+# print(driverlapDura)
 
 
-# dt = ApiUtlis.GetCarData(sessionCode, driverNumber)
-# dt = dt[['driver_number', 'date', 'n_gear', 'rpm', 'speed']]
-# dt = DataUtlis.FormatTime_HHMMSS(dt, 'date')
-# dt = DataUtlis.RemoveRowIfZero(dt, 'n_gear')
-# DataUtlis.ExportToExcel('CarData', dt)
-# print(dt)
+# print(merge)
 

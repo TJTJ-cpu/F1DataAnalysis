@@ -21,11 +21,15 @@ def GetIntervalData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/intervals?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
-def GetLapsData(driverNum, sessionKey, lapNum = None):
+def GetLapsData(sessionKey, lapNum = None):
     if lapNum is not None and lapNum > 1:
-        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&driver_number={driverNum}&lap_number={lapNum}'
+        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&lap_number={lapNum}'
     else:
-        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&driver_number={driverNum}'
+        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}'
+    return UrlToDataFrame(url)
+
+def GetDriverLapsData(sessionKey, driverNum):
+    url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
 def GetLocationData(sessionKey, driverNum):
@@ -85,19 +89,44 @@ def GetSessionType(sessionKey):
     dt = UrlToDataFrame(url)
     return dt['session_type'][0]
 
+#################### Specific Data Gathering  ####################
+
+def DriverLapDuration(key, driverNum):
+    url = f'https://api.openf1.org/v1/laps?driver_number={driverNum}&session_key={key}'
+    dt =  UrlToDataFrame(url)
+    dt = dt['lap_duration']
+    return dt.mean()
+
+def GetDriverInfo(key):
+    url = f'https://api.openf1.org/v1/drivers?session_key={key}'
+    dt = UrlToDataFrame(url)
+    idx = random.choice(dt.index)
+    dt = dt.loc[idx]
+    dt = dt[['full_name', 'name_acronym',  'team_name', 'driver_number']]
+    return dt
+
+
 #################### Costumized Function ####################
 
 def GetTrackData(sessionKey):
     url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'
     dt = UrlToDataFrame(url)
-    dt = dt[['date_start', 'country_name', 'circuit_short_name', 'year']]
+    dt = dt[['date_start', 'country_name', 'circuit_short_name', 'year', 'session_type']]
     return DataUtlis.FormatDate_DDMMYY(dt, 'date_start')
 
 def RandomSessionKey():
-    # year = [2024, 2023]
-    year = [2023]
+    year = [2024, 2023]
+    # year = [2023]
     dt = GetSessionData(random.choice(year), 'Race')
     return random.choice(dt['session_key'].to_numpy())
+
+def RandomDriver(key):
+    url = f'https://api.openf1.org/v1/drivers?session_key={key}'
+    dt = UrlToDataFrame(url)
+    idx = random.choice(dt.index)
+    dt = dt.loc[idx]
+    dt = dt[['full_name', 'name_acronym',  'team_name', 'driver_number']]
+    return dt
 
 def GetAllSessionKey(year=None):
     keys = []
@@ -119,6 +148,20 @@ def GetQualifyPosition(sessionKey):
     final = dt.groupby('driver_number').last().reset_index()
     final.index += 1
     return final.sort_values('position')
+
+def GetPosition(sessionKey):
+    dt = ApiUtlis.GetPositionData(sessionKey)
+    dt = dt.sort_values('date')
+    dt = dt.groupby('driver_number').last().reset_index()
+    dt.index += 1
+    dt = dt.sort_values('position')
+    dt = dt[['driver_number', 'position']]
+    dt = DataUtlis.ResetIndex(dt)
+    return dt
+
+#################### FullStackFunction ####################
+
+# def FS_Lap_Pos
 
 #################### All Data ####################
 

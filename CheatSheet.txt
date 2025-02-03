@@ -18,6 +18,13 @@ Func that add column if they belong to each other
 
 --------------------------------------------------
 
+!! COMPARISION IDEA !!
+
+Number of laps vs Driver
+Qualify vs Driver
+
+--------------------------------------------------
+
 !! TO DO LIST !!
 
 Generate A Table
