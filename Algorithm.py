@@ -5,6 +5,7 @@ import pandas as pd
 import ApiUtlis
 import DataUtlis
 import math
+import time
 import random
 
 
@@ -57,13 +58,14 @@ def FullExportFunction():
     random.shuffle(keys)
     for i, key in enumerate(keys):
         trackData = ApiUtlis.GetTrackData(key)
-        print(f'{i}. {trackData[['circuit_short_name', 'country_name']]}')
+        trackData = trackData[['circuit_short_name', 'country_name']]
+        print(trackData)
+
         # get driver number
         driverArr = ApiUtlis.GetALlDriverNumber(key)
         for driver in driverArr:
             data = ApiUtlis.GetCarData(key, driver)
             DataUtlis.ExportToExcel(f'CarData_{key}_{driver}', data, 'CarData')
-        return
     return
 
 #################### Algorithm  ####################
