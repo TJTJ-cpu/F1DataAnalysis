@@ -44,11 +44,14 @@ def ColumnToArray(dt, cName):
 #################### Exporting Tools  ####################
 
 def ExportToExcel(fileName, Data, SubFolder=None):
+    rootFolder = 'Data'
+    os.makedirs(rootFolder, exist_ok=True)
     if SubFolder:
-        os.makedirs(SubFolder, exist_ok=True)
-        filePath = os.path.join(SubFolder,f'{fileName}.xlsx')
+        folderPath = os.path.join(rootFolder, SubFolder)
+        os.makedirs(folderPath, exist_ok=True)
+        filePath = os.path.join(folderPath,f'{fileName}.xlsx')
     else:
-        filePath = f'{fileName}.xlsx'
+        filePath = os.path.join(rootFolder, f'{fileName}.xlsx')
     try:
         Data.to_excel(filePath, index=False)
         print(f'Exported "{filePath}" seccessfully!')
@@ -61,6 +64,7 @@ def ExportPositionData(dt, key):
     year = str(tk['year'][0])
     circuitName = str(tk['circuit_short_name'][0])
     # Export to Excel
+
     fileName = f'{circuitName}_{year}_PosData'
     dtSorted = dt.sort_values('date')
     final = dtSorted.groupby('driver_number').last().reset_index()

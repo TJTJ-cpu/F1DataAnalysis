@@ -17,6 +17,12 @@ def GetDriverData(sessionKey, driverNum=None):
         url = f'https://api.openf1.org/v1/drivers?session_key={sessionKey}'
     return UrlToDataFrame(url)
 
+def GetALlDriverNumber(sessionKey):
+    url = f'https://api.openf1.org/v1/drivers?session_key={sessionKey}'
+    dt = UrlToDataFrame(url)
+    arr = dt['driver_number'].to_numpy()
+    return arr
+
 def GetIntervalData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/intervals?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
@@ -159,9 +165,8 @@ def GetPosition(sessionKey):
     dt = DataUtlis.ResetIndex(dt)
     return dt
 
-#################### FullStackFunction ####################
 
-# def FS_Lap_Pos
+
 
 #################### All Data ####################
 
