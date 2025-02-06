@@ -27,9 +27,9 @@ def GetIntervalData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/intervals?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
-def GetLapsData(sessionKey, lapNum = None):
-    if lapNum is not None and lapNum > 1:
-        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&lap_number={lapNum}'
+def GetLapsData(sessionKey, driverNum = None):
+    if driverNum:
+        url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}&driver_number={driverNum}'
     else:
         url = f'https://api.openf1.org/v1/laps?session_key={sessionKey}'
     return UrlToDataFrame(url)
@@ -42,8 +42,8 @@ def GetLocationData(sessionKey, driverNum):
     url = f'https://api.openf1.org/v1/location?session_key={sessionKey}&driver_number={driverNum}'
     return UrlToDataFrame(url)
 
-def GetMeetingData(year):
-    url = f'https://api.openf1.org/v1/meetings?year={year}'
+def GetMeetingData(countryName, year):
+    url = f'https://api.openf1.org/v1/meetings?year={year}&country_name={countryName}'
     return UrlToDataFrame(url)
 
 def GetPitData(sessionKey, driverNum = None):
@@ -63,6 +63,14 @@ def GetPositionData(sessionKey, driverNum = None):
 # Probably need more parameter for this one
 def GetRaceControlData(sessionKey):
     url = f'https://api.openf1.org/v1/race_control?session_key={sessionKey}'
+    return UrlToDataFrame(url)
+
+def GetStintsData(sessionKey, driverNum):
+    url = f'https://api.openf1.org/v1/stints?session_key={sessionKey}&driver_number={driverNum}'
+    return UrlToDataFrame(url)
+
+def GetSessionDataByKey(sessionKey):
+    url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'
     return UrlToDataFrame(url)
 
 def GetSessionData(year, sesType = None):
@@ -113,6 +121,10 @@ def GetDriverInfo(key):
 
 
 #################### Costumized Function ####################
+
+def GetRandomDriver(sessionKey):
+    data = GetDriverData(sessionKey)
+    drivers = data['driver_number']
 
 def GetTrackData(sessionKey):
     url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'

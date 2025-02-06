@@ -1,3 +1,4 @@
+from os.path import isfile
 from urllib.request import HTTPError, urlopen
 from urllib.error import HTTPError
 import pandas as pd
@@ -43,11 +44,20 @@ def ColumnToArray(dt, cName):
 
 #################### Exporting Tools  ####################
 
-def ExportToExcel(fileName, Data, SubFolder=None):
+def CreateSubFolder(fileName):
     rootFolder = 'Data'
     os.makedirs(rootFolder, exist_ok=True)
-    if SubFolder:
-        folderPath = os.path.join(rootFolder, SubFolder)
+    subMain = os.path.join(rootFolder, fileName)
+    os.makedirs(subMain, exist_ok=True)
+
+def ExportToExcel(fileName, Data, folder, subFolder=None):
+    rootFolder = 'Data'
+    os.makedirs(rootFolder, exist_ok=True)
+    subMain = os.path.join(rootFolder, folder)
+    os.makedirs(subMain, exist_ok=True)
+    rootFolder = subMain
+    if subFolder:
+        folderPath = os.path.join(rootFolder, subFolder)
         os.makedirs(folderPath, exist_ok=True)
         filePath = os.path.join(folderPath,f'{fileName}.xlsx')
     else:
@@ -71,6 +81,16 @@ def ExportPositionData(dt, key):
     final = final.sort_values('position')
     ExportToExcel(fileName, final, 'Data')
 
+def CheckIfFileExist(path):
+    root = 'Data'
+    os.makedirs(root, exist_ok=True)
+    path = f'{path}.xlsx'
+    path = os.path.join(root, path)
+    if os.path.isfile(path):
+        return True 
+    else:
+        return False
+
 def UrlToDataFrame(url, retries=5, waitFactor=2):
     for attemp in range(retries):
         try:
@@ -85,6 +105,8 @@ def UrlToDataFrame(url, retries=5, waitFactor=2):
                 else:
                     wait = waitFactor ** attemp
                 time.sleep(wait)
+            elif e.code == 500: 
+                return None
             else:
                 raise
     raise Exception("Exceeded maximum retries due to rate limiting")

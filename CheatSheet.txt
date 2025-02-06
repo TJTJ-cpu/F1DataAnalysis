@@ -8,6 +8,23 @@ pd.to_datetime(DataName_name['date_format_name']).dt.strftime('%d-%m-%Y')
 
 --------------------------------------------------
 
+!! Finding !!
+
+API Have Limitation
+- Use time.sleep() to over come the problem
+
+Finding the r val
+
+Should organized more
+- Have some structure for the coded
+- Write down idea before commiting
+
+How good library is 
+- Pandas is OP
+- Look through the documentation first (Might have what you're looking for)
+
+--------------------------------------------------
+
 !! TO CODE LIST !!
 
 Func that can change the time format

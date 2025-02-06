@@ -40,7 +40,18 @@ data = [[12, 42], [13, 46], [14, 48], [15, 52], [16, 54], [17, 54], [18, 57], [1
 
 data2 = [[30, 80], [31, 88], [33, 90], [35, 95]]
 
-Algorithm.FullExportFunction()
+
+
+data = ApiUtlis.GetALlDriverNumber(key)
+driver = random.choice(data)
+
+
+Algorithm.FullDataGatheringFunc()
+
+
+# print(f'Driver: {driver}, Key: {key}')
+# df = ApiUtlis.GetRaceControlData(key)
+# print(df)
 
 # keys = ApiUtlis.GetAllSessionKey()
 # key = random.choice(keys)
