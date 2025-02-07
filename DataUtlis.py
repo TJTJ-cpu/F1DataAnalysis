@@ -35,6 +35,24 @@ def ReadCarData(fileName, driverNum = None):
             df = df._append(df1, ignore_index= True)
     return df
 
+def ReadPitData(fileName, driverNum = None):
+    # handle drivernum
+    root = 'Data'
+    cat = 'Pit'
+    oriPath = os.path.join(root, fileName, cat)
+    arr = ShowAllFile(oriPath)
+
+    df = pd.DataFrame()
+    if driverNum:
+        path = os.path.join(oriPath, f'Driver_{driverNum}.xlsx')
+        df = pd.read_excel(path)
+    else:
+        for driver in arr:
+            path = os.path.join(oriPath, driver)
+            df1 = pd.read_excel(path)
+            df = df._append(df1, ignore_index= True)
+    return df
+
 def ReadFunc(path):
     return pd.read_excel(path)
 

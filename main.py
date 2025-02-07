@@ -36,17 +36,16 @@ class Category(Enum):
 raceName = "Japan"
 year = 2024
 
-# fileName = f'{raceName}_{year}'
-#
-# cat = Category.CarData.value
-#
-# path = os.path.join('Data', fileName, cat)
-# arr = os.listdir(path)
-#
-# df = DataUtlis.ReadCarData(fileName)
-# arr = df['brake'].to_numpy()
-# print(len(arr))
+fileName = f'{raceName}_{year}'
 
-Algorithm.FullDataGatheringFunc()
+cat = Category.CarData.value
+
+path = os.path.join('Data', fileName, cat)
+arr = os.listdir(path)
+
+df = DataUtlis.ReadPitData(fileName, 16)
+print(df)
+
+# Algorithm.FullDataGatheringFunc()
 
 
