@@ -27,11 +27,14 @@ How good library is
 
 !! TO CODE LIST !!
 
-Func that can change the time format
+Func that read all the file in that folder
 
-Func that remove some column 
+Func that check if the files exists
 
-Func that add column if they belong to each other
+Func that read from excel (Pass in some para)
+-- RaceName and Year
+
+Turn it into DataFrame
 
 --------------------------------------------------
 

@@ -1,6 +1,7 @@
 from os.path import isfile
 from urllib.request import HTTPError, urlopen
 from urllib.error import HTTPError
+from warnings import catch_warnings
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -9,9 +10,36 @@ import Algorithm
 import time
 import json
 import os
+import random
 
 
 
+
+#################### Excel Data Manupulation  ####################
+
+def ReadCarData(fileName, driverNum = None):
+    # handle drivernum
+    root = 'Data'
+    cat = 'CarData'
+    oriPath = os.path.join(root, fileName, cat)
+    arr = ShowAllFile(oriPath)
+
+    df = pd.DataFrame()
+    if driverNum:
+        path = os.path.join(oriPath, f'Driver_{driverNum}.xlsx')
+        df = pd.read_excel(path)
+    else:
+        for driver in arr:
+            path = os.path.join(oriPath, driver)
+            df1 = pd.read_excel(path)
+            df = df._append(df1, ignore_index= True)
+    return df
+
+def ReadFunc(path):
+    return pd.read_excel(path)
+
+def ShowAllFile(path):
+    return os.listdir(path)
 
 #################### Data Manipulating  ####################
     

@@ -75,6 +75,7 @@ def FullDataGatheringFunc():
         LoopDriverData(raceName, key)
         LoopRaceControlData(raceName, key)
         LoopSessionData(raceName, key)
+        LoopFinalPositionData(raceName, key)
         # LoopMeetingData(raceName, countryName, year)
         for driver in driverArr:
             LoopStintsData(driver, raceName, key)
@@ -143,6 +144,12 @@ def LoopPositionData(driver, raceName, key):
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
     else:
         print(f'{path} is already exists')
+
+def LoopFinalPositionData(raceName, key):
+    folderName = 'Position' 
+    fileName = 'FinalPosition'
+    data = ApiUtlis.GetPosition(key)
+    DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
 
 def LoopPitData(driver, raceName, key):
     folderName = 'Pit' 
