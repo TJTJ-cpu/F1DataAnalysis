@@ -38,14 +38,14 @@ year = 2024
 
 fileName = f'{raceName}_{year}'
 
-cat = Category.CarData.value
+# cat = Category.CarData.value
+#
+# path = os.path.join('Data', fileName, cat)
+# arr = os.listdir(path)
+#
+# df = DataUtlis.ReadPitData(fileName, 16)
+# print(df)
 
-path = os.path.join('Data', fileName, cat)
-arr = os.listdir(path)
-
-df = DataUtlis.ReadPitData(fileName, 16)
-print(df)
-
-# Algorithm.FullDataGatheringFunc()
+Algorithm.FullDataGatheringFunc()
 
 
