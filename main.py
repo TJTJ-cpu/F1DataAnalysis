@@ -1,6 +1,6 @@
 from pandas.core.dtypes.generic import ABCPeriodArray
 from pandas.core.series import algorithms
-from enum import Enum
+from pathlib import Path
 
 import pandas as pd
 import numpy as np
@@ -13,8 +13,8 @@ import time
 import os
 import random
 
-# keys = ApiUtlis.GetAllSessionKey()
-# key = random.choice(keys)
+keys = ApiUtlis.GetAllSessionKeys()
+key = random.choice(keys)
 
 
 
@@ -23,37 +23,43 @@ data = [[12, 42], [13, 46], [14, 48], [15, 52], [16, 54], [17, 54], [18, 57], [1
 
 data2 = [[30, 80], [31, 88], [33, 90], [35, 95]]
 
-# Category Type
-class Category(Enum):
-    CarData = "CarData"
-    Laps = "Laps"
-    RaceControl = "RaceControl"
 
 
 
 # data = ApiUtlis.GetALlDriverNumber(key)
 # driver = random.choice(data)
 
-raceName = "Japan"
-year = 2024
+fileName = random.choice(DataUtlis.GetAllFolderNames())
+# print(fileName)
 
-fileName = f'{raceName}_{year}'
 
-# cat = Category.CarData.value
+cat = Algorithm.CCategory.CarData.value
 #
 # path = os.path.join('Data', fileName, cat)
 # arr = os.listdir(path)
 #
-# df = DataUtlis.ReadPitData(fileName, 16)
-# print(df)
+# df = DataUtlis.ReadPitData(fileName)
 
-keys = ApiUtlis.GetAllSessionKeys()
-key = random.choice(keys)
+# folders = DataUtlis.GetAllFolderNames()
+# for f in folders:
+#     print(f)
+#     df = Algorithm.LapsTimevsPosition(f)
+#     corr = df['position'].corr(df['avg_lap_duration'])
+#     print(corr)
+#     print()
 
+
+
+# print(lapsDf)
+
+
+
+# DO THIS AT NIGHT!
 start = time.time()
+while True:
+    Algorithm.FullDataGatheringFunc()
 Algorithm.FullDataGatheringFunc()
 end = time.time()
-
 elapsedTime = end - start
 print(f'TimeTaken: {elapsedTime}')
 

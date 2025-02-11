@@ -17,6 +17,29 @@ import random
 
 #################### Excel Data Manupulation  ####################
 
+def ReadFinalPosition(fileName):
+    root = 'Data'
+    cat = 'Position'
+    path = os.path.join(root, fileName, cat, 'FinalPosition.xlsx')
+    return pd.read_excel(path)
+
+def ReadLapsData(fileName, driverNum = None):
+    root = 'Data'
+    cat = 'Laps'
+    oriPath = os.path.join(root, fileName, cat)
+    arr = ShowAllFile(oriPath)
+
+    df = pd.DataFrame()
+    if driverNum:
+        path = os.path.join(oriPath, f'Driver_{driverNum}.xlsx')
+        df = pd.read_excel(path)
+    else:
+        for driver in arr:
+            path = os.path.join(oriPath, driver)
+            df1 = pd.read_excel(path)
+            df = df._append(df1, ignore_index= True)
+    return df
+
 def ReadCarData(fileName, driverNum = None):
     # handle drivernum
     root = 'Data'
@@ -61,6 +84,10 @@ def ShowAllFile(path):
 
 #################### Data Manipulating  ####################
     
+def GetAllFolderNames():
+    dir_path = os.path.join(os.getcwd(), "Data")
+    return [f for f in os.listdir(dir_path) if os.path.isdir(os.path.join(dir_path, f))]
+
 def MergeDataFrame(dt1, dt2, cName):
     return pd.merge(dt1, dt2, on=cName,how='right')
 
@@ -83,6 +110,9 @@ def SetIndex(data, cName):
 def ColumnToArray(dt, cName):
     foo = dt[cName].to_numpy()
     return foo
+
+def RemoveRowIf(dt, column, val):
+    return dt[dt[column] != val]
 
 # NEED TO RESTRUCTURE THE FUNC 
 # def GetAddColumnApi(sessionKey, cName):

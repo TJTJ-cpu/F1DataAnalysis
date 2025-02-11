@@ -1,6 +1,7 @@
 from ssl import ALERT_DESCRIPTION_INSUFFICIENT_SECURITY
 import matplotlib.pyplot as plt
 import pandas as pd
+from enum import Enum
 
 import ApiUtlis
 import DataUtlis
@@ -10,47 +11,12 @@ import time
 import random
 
 
-
 #################### FullStackFunction ####################
-
-def FS_Lap_Pos():
-    # dataList = [[pos1, dura1], [pos2, dura2]]
-    dataList = [[]]
-    position = []
-    duraArr = []
-    tempList = [[]]
-    keys = ApiUtlis.GetAllSessionKeys()
-    keys = [7779, 7953]
-    for key in keys:
-        # Get Keys
-        print(key)
-        df = ApiUtlis.GetPosition(key)
-        tempList = [[]]
-
-        # Track Info
-        tk = ApiUtlis.GetTrackData(key)
-        tkName = tk[['circuit_short_name', 'country_name', 'year']]
-        print(tkName)
-
-        # Iter
-        for index, row in df.iterrows():
-            driverNum = int(row.iloc[0])
-            position = int(row.iloc[1])
-            dura = ApiUtlis.DriverLapDuration(key, driverNum)
-            temp = [position, float(dura)]
-            print(temp)
-            tempList.append([position, dura])
-
-    # Spread Sheet
-    df = pd.DataFrame(tempList, columns=['Age', 'Weight'])
-    rVal = df['Age'].corr(df['Weight'])
-    print(f'final rval: {rVal}')
-
-    # print(dataList)
-    # r val
-    # plot 
-    # df.plot.scatter(x='position', y='duration')
-    # plt.show()
+# Category Type
+class CCategory(Enum):
+    CarData = "CarData"
+    Laps = "Laps"
+    RaceControl = "RaceControl"
 
 def FullDataGatheringFunc():
     keys = ApiUtlis.GetAllSessionKeys()
@@ -88,6 +54,24 @@ def FullDataGatheringFunc():
         # Drivers
     return
 
+def LapsTimevsPosition(fileName):
+    lapsDf = DataUtlis.ReadLapsData(fileName)
+    lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
+    lapsDf = lapsDf.dropna()
+
+    # GET AVG
+    lapsDf = lapsDf.groupby('driver_number', as_index=False)['lap_duration'].mean()
+    lapsDf.rename(columns={'lap_duration': 'avg_lap_duration'}, inplace=True)
+    # print(lapsDf)  # Displays the result
+
+    posData = DataUtlis.ReadFinalPosition(fileName)
+    # print(posData)
+
+    final = DataUtlis.MergeDataFrame(lapsDf, posData, 'driver_number')
+    final = final[['position', 'driver_number', 'avg_lap_duration']]
+    return final    
+
+
 #################### Looping Function  ####################
 
 def LoopWeatherData(raceName, key):
@@ -98,8 +82,6 @@ def LoopWeatherData(raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetWeatherData(key)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopStintsData(driver, raceName, key):
     folderName = 'Stint' 
@@ -109,8 +91,6 @@ def LoopStintsData(driver, raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetStintsData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopSessionData(raceName, key):
     folderName = 'Sessions' 
@@ -120,8 +100,6 @@ def LoopSessionData(raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetSessionDataByKey(key)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopRaceControlData(raceName, key):
     folderName = 'RaceControl' 
@@ -131,8 +109,6 @@ def LoopRaceControlData(raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetRaceControlData(key)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopPositionData(driver, raceName, key):
     folderName = 'Position' 
@@ -142,14 +118,15 @@ def LoopPositionData(driver, raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetPositionData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopFinalPositionData(raceName, key):
     folderName = 'Position' 
+    subPath = os.path.join(raceName, folderName)
     fileName = 'FinalPosition'
-    data = ApiUtlis.GetPosition(key)
-    DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
+    path = os.path.join(subPath, fileName)
+    if not DataUtlis.CheckIfFileExist(path):
+        data = ApiUtlis.GetPosition(key)
+        DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
 
 def LoopPitData(driver, raceName, key):
     folderName = 'Pit' 
@@ -158,9 +135,8 @@ def LoopPitData(driver, raceName, key):
     path = os.path.join(subPath, fileName)
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetPitData(key, driver)
+        data = DataUtlis.RemoveRowIf(data, 'lap_number', 1)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopMeetingData(raceName ,countryName, year):
     folderName = 'Meetings' 
@@ -170,8 +146,6 @@ def LoopMeetingData(raceName ,countryName, year):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetMeetingData(countryName, year)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 
 def LoopLocation(driver, raceName, key):
@@ -182,8 +156,6 @@ def LoopLocation(driver, raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetLocationData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopLapsData(driver, raceName, key):
     folderName = 'Laps' 
@@ -193,8 +165,6 @@ def LoopLapsData(driver, raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetLapsData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopIntervalData(driver, raceName, key):
     subPath = os.path.join(raceName, 'Intervals')
@@ -203,8 +173,6 @@ def LoopIntervalData(driver, raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetIntervalData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, raceName, 'Intervals')
-    else:
-        print(f'{path} is already exists')
 
 
 def LoopDriverData(raceName, key):
@@ -214,8 +182,6 @@ def LoopDriverData(raceName, key):
     if not DataUtlis.CheckIfFileExist(path):
         driverData = ApiUtlis.GetDriverData(key)
         DataUtlis.ExportToExcel(fileName, driverData, raceName, fileName)
-    else:
-        print(f'{path} is already exists')
 
 def LoopCarData(driver, folderName, key):
     subPath = os.path.join(folderName, 'CarData')
@@ -224,8 +190,6 @@ def LoopCarData(driver, folderName, key):
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetCarData(key, driver)
         DataUtlis.ExportToExcel(fileName, data, folderName, 'CarData')
-    else:
-        print(f'{path} is already exists')
 
 #################### Algorithm  ####################
 def PearsonCorrelation(dt, val1, val2):

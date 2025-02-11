@@ -42,7 +42,11 @@ Turn it into DataFrame
 
 !! COMPARISION IDEA !!
 
-CarData to Excel
+Lap time vs. finishing position 
+Top speed vs. final ranking 
+Qualifying position vs. race result 
+Number of pit stops vs. race time 
+Tyre compound vs. lap time 
 
 --------------------------------------------------
 
