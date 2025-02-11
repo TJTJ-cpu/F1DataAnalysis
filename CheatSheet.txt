@@ -40,6 +40,42 @@ Turn it into DataFrame
 
 --------------------------------------------------
 
+!! Milestone2 2 !!
+
+Your project in short
+- Data analysis on factors contributing to F1 Racing
+- Gather Data from API
+- Use python to analyze it
+- See the correlation between data
+
+Your research so far
+- Pearson Correlation
+- Compare some data
+
+Your tests and implementations so far
+    Pearson Correlation (Explaination)
+        - High: Height vs Weight
+        - Low: Show Size vs IQ
+- Test between couple of variables
+- Using pearson correlation
+test asdf
+
+Your anticipations on the outcome of the project.
+- Be able to see correlation between variables 
+- Understand different correlation methods
+
+Any blockers or impediments and risk assessments.
+- API Limitation
+- Choosing the right vairables to compare
+- Choosing the right algorithm
+
+Where to go from here
+- Find a way to clean the data
+- Find a way to organized the data
+- Make a function that test all variables rank the correlation
+
+--------------------------------------------------
+
 !! COMPARISION IDEA !!
 
 Lap time vs. finishing position 
@@ -56,8 +92,6 @@ X Get all the driver number within the same key
 
 Put everything into excel
 {API Method Name}_{Session Keys}
-
-
 
 Generate A Table
 - Driver Data

@@ -23,6 +23,7 @@ def ReadFinalPosition(fileName):
     path = os.path.join(root, fileName, cat, 'FinalPosition.xlsx')
     return pd.read_excel(path)
 
+
 def ReadLapsData(fileName, driverNum = None):
     root = 'Data'
     cat = 'Laps'
