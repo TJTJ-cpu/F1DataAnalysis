@@ -146,7 +146,7 @@ def RandomDriver(key):
     dt = dt[['full_name', 'name_acronym',  'team_name', 'driver_number']]
     return dt
 
-def GetAllSessionKey(year=None):
+def GetAllSessionKeys(year=None):
     keys = []
     temp = []
     if year:
@@ -183,7 +183,7 @@ def GetPosition(sessionKey):
 #################### All Data ####################
 
 def GetAllTrackData():
-    keys = GetAllSessionKey()
+    keys = GetAllSessionKeys()
     print(keys)
     tk = []
     for key in keys:

@@ -1,3 +1,4 @@
+from pandas.core.dtypes.generic import ABCPeriodArray
 from pandas.core.series import algorithms
 from enum import Enum
 
@@ -46,6 +47,14 @@ fileName = f'{raceName}_{year}'
 # df = DataUtlis.ReadPitData(fileName, 16)
 # print(df)
 
+keys = ApiUtlis.GetAllSessionKeys()
+key = random.choice(keys)
+
+start = time.time()
 Algorithm.FullDataGatheringFunc()
+end = time.time()
+
+elapsedTime = end - start
+print(f'TimeTaken: {elapsedTime}')
 
 

@@ -19,7 +19,7 @@ def FS_Lap_Pos():
     position = []
     duraArr = []
     tempList = [[]]
-    keys = ApiUtlis.GetAllSessionKey()
+    keys = ApiUtlis.GetAllSessionKeys()
     keys = [7779, 7953]
     for key in keys:
         # Get Keys
@@ -53,7 +53,7 @@ def FS_Lap_Pos():
     # plt.show()
 
 def FullDataGatheringFunc():
-    keys = ApiUtlis.GetAllSessionKey()
+    keys = ApiUtlis.GetAllSessionKeys()
     keysNum = len(keys)
     print(f'Race Count: {keysNum}')
     random.shuffle(keys)
