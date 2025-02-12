@@ -40,7 +40,7 @@ Turn it into DataFrame
 
 --------------------------------------------------
 
-!! Milestone2 2 !!
+!! Milestone 2 !!
 
 Your project in short
 - Data analysis on factors contributing to F1 Racing
@@ -60,14 +60,14 @@ Your tests and implementations so far
 - Using pearson correlation
 test asdf
 
-Your anticipations on the outcome of the project.
-- Be able to see correlation between variables 
-- Understand different correlation methods
-
 Any blockers or impediments and risk assessments.
 - API Limitation
 - Choosing the right vairables to compare
 - Choosing the right algorithm
+
+Your anticipations on the outcome of the project.
+- Be able to see correlation between variables 
+- Understand different correlation methods
 
 Where to go from here
 - Find a way to clean the data

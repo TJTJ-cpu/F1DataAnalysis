@@ -40,7 +40,7 @@ cat = Algorithm.CCategory.CarData.value
 #
 # df = DataUtlis.ReadPitData(fileName)
 
-# folders = DataUtlis.GetAllFolderNames()
+folders = DataUtlis.GetAllFolderNames()
 # for f in folders:
 #     print(f)
 #     df = Algorithm.LapsTimevsPosition(f)
@@ -48,19 +48,34 @@ cat = Algorithm.CCategory.CarData.value
 #     print(corr)
 #     print()
 
+arr = []
+high = 'Spain_2024'
+low = 'Qatar_2023'
+avg = 'Mexico_2024'
+arr.append(high)
+arr.append(avg)
+arr.append(low)
 
+for f in arr:
+    df = Algorithm.LapsTimevsPosition(f)
+    print(f'    {f}')
+    print(df)
+    corr = df['position'].corr(df['avg_lap_duration'])
+    # print(f'r value: {corr}')
+    print()
+    print()
 
 # print(lapsDf)
 
 
 
 # DO THIS AT NIGHT!
-start = time.time()
-while True:
-    Algorithm.FullDataGatheringFunc()
-Algorithm.FullDataGatheringFunc()
-end = time.time()
-elapsedTime = end - start
-print(f'TimeTaken: {elapsedTime}')
+# start = time.time()
+# while True:
+#     Algorithm.FullDataGatheringFunc()
+# Algorithm.FullDataGatheringFunc()
+# end = time.time()
+# elapsedTime = end - start
+# print(f'TimeTaken: {elapsedTime}')
 
 
