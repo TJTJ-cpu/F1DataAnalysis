@@ -34,35 +34,35 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 
 
 cat = Algorithm.CCategory.CarData.value
-#
-# path = os.path.join('Data', fileName, cat)
-# arr = os.listdir(path)
-#
-# df = DataUtlis.ReadPitData(fileName)
 
-folders = DataUtlis.GetAllFolderNames()
+# TO GATHER ALL THE INFORMATION
+# while True:
+#     Algorithm.FullDataGatheringFunc()
+
+# folders = DataUtlis.GetAllFolderNames()
 # for f in folders:
-#     print(f)
 #     df = Algorithm.LapsTimevsPosition(f)
 #     corr = df['position'].corr(df['avg_lap_duration'])
-#     print(corr)
-#     print()
+#     if (corr < 0.5):
+#         print(f'{f}  {corr}')
+#         print(df)
+#         print()
 
 arr = []
-high = 'Spain_2024'
+# high = 'Spain_2024'
+# avg = 'Mexico_2024'
+# arr.append(avg)
+# arr.append(high)
 low = 'Qatar_2023'
-avg = 'Mexico_2024'
-arr.append(high)
-arr.append(avg)
 arr.append(low)
 
 for f in arr:
     df = Algorithm.LapsTimevsPosition(f)
-    print(f'    {f}')
-    print(df)
-    corr = df['position'].corr(df['avg_lap_duration'])
-    # print(f'r value: {corr}')
-    print()
+    driver_55 = df[df['driver_number'] == 55]  # Filter for driver 55
+    corr = df['position'].corr(df['avg_lap_duration'])  # Compute correlation
+    print(driver_55)
+
+    print(f'r value: {corr}')
     print()
 
 # print(lapsDf)
@@ -73,7 +73,6 @@ for f in arr:
 # start = time.time()
 # while True:
 #     Algorithm.FullDataGatheringFunc()
-# Algorithm.FullDataGatheringFunc()
 # end = time.time()
 # elapsedTime = end - start
 # print(f'TimeTaken: {elapsedTime}')

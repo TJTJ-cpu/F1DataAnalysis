@@ -25,6 +25,9 @@ How good library is
 - Pandas is OP
 - Look through the documentation first (Might have what you're looking for)
 
+API Not giving any information
+- Sometimes the API give you an empty error
+
 --------------------------------------------------
 
 !! TO CODE LIST !!

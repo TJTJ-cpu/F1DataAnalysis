@@ -63,6 +63,10 @@ def LapsTimevsPosition(fileName):
     lapsDf = lapsDf.groupby('driver_number', as_index=False)['lap_duration'].mean()
     lapsDf.rename(columns={'lap_duration': 'avg_lap_duration'}, inplace=True)
     # print(lapsDf)  # Displays the result
+    for index, row in lapsDf.iterrows():
+        if pd.isna(row['avg_lap_duration']):
+            print(row)
+            print("THERE'S NONE IN THE DATA")
 
     posData = DataUtlis.ReadFinalPosition(fileName)
     # print(posData)
