@@ -33,37 +33,45 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 # print(fileName)
 
 
-cat = Algorithm.CCategory.CarData.value
-
 # TO GATHER ALL THE INFORMATION
 # while True:
 #     Algorithm.FullDataGatheringFunc()
 
-# folders = DataUtlis.GetAllFolderNames()
-# for f in folders:
-#     df = Algorithm.LapsTimevsPosition(f)
-#     corr = df['position'].corr(df['avg_lap_duration'])
-#     if (corr < 0.5):
-#         print(f'{f}  {corr}')
-#         print(df)
-#         print()
+folders = DataUtlis.GetAllFolderNames()
+for f in folders:
+    df = Algorithm.LapsTimevsPosition(f)
+    corr = df['position'].corr(df['avg_lap_duration'])
+    # print(f'{f}  {corr}')
+    # print(df)
+    # print()
 
-arr = []
+# print(ApiUtlis.GetTrackData(key))
+# df = ApiUtlis.GetPositionData(key)
+# drivers = ApiUtlis.GetALlDriverNumber(key)
+# for driver in drivers:
+#     temp = ApiUtlis.GetDriverLapsData(key, driver)
+#     print(temp)
+    # temp = DataUtlis.RemoveNanRows(temp)
+    # print(f'DriverNum: {driver}, Laps Count: {len(temp)}')
+
+
 # high = 'Spain_2024'
 # avg = 'Mexico_2024'
 # arr.append(avg)
 # arr.append(high)
-low = 'Qatar_2023'
-arr.append(low)
+# low = 'Qatar_2023'
+# arr.append(low)
+#
+# for f in arr:
+#     df = Algorithm.LapsTimevsPosition(f)
+#     d1 = df[df['driver_number'] == 16]
+#     d2 = df[df['driver_number'] == 55]
+#     corr = df['position'].corr(df['avg_lap_duration'])  # Compute correlation
+    # if pd.isna(df.loc[df['driver_number'] == 55, 'avg_lap_duration']).any():
+    #     print("Driver 55 has NaN in avg_lap_duration")
+    # print(d1)
+    # print(d2)
 
-for f in arr:
-    df = Algorithm.LapsTimevsPosition(f)
-    driver_55 = df[df['driver_number'] == 55]  # Filter for driver 55
-    corr = df['position'].corr(df['avg_lap_duration'])  # Compute correlation
-    print(driver_55)
-
-    print(f'r value: {corr}')
-    print()
 
 # print(lapsDf)
 

@@ -28,18 +28,15 @@ How good library is
 API Not giving any information
 - Sometimes the API give you an empty error
 
+API Is not perfect
+- No total lap number
+- Need other method to get it
+
 --------------------------------------------------
 
 !! TO CODE LIST !!
 
-Func that read all the file in that folder
-
-Func that check if the files exists
-
-Func that read from excel (Pass in some para)
--- RaceName and Year
-
-Turn it into DataFrame
+Remove if DNF Func
 
 --------------------------------------------------
 

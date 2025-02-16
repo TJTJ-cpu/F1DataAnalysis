@@ -56,23 +56,24 @@ def FullDataGatheringFunc():
 
 def LapsTimevsPosition(fileName):
     lapsDf = DataUtlis.ReadLapsData(fileName)
+    posData = DataUtlis.ReadFinalPosition(fileName)
+
+    # higest lap
+    winnerRow = posData[posData['position'] == 1]
+    winnerNum = winnerRow['driver_number'].values[0]
+    highestLap = lapsDf[lapsDf['driver_number'] == winnerNum]['lap_number'].max()
+
     lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
     lapsDf = lapsDf.dropna()
 
     # GET AVG
     lapsDf = lapsDf.groupby('driver_number', as_index=False)['lap_duration'].mean()
     lapsDf.rename(columns={'lap_duration': 'avg_lap_duration'}, inplace=True)
-    # print(lapsDf)  # Displays the result
-    for index, row in lapsDf.iterrows():
-        if pd.isna(row['avg_lap_duration']):
-            print(row)
-            print("THERE'S NONE IN THE DATA")
-
-    posData = DataUtlis.ReadFinalPosition(fileName)
-    # print(posData)
 
     final = DataUtlis.MergeDataFrame(lapsDf, posData, 'driver_number')
     final = final[['position', 'driver_number', 'avg_lap_duration']]
+    # loop through driver num and check if na
+    final = DataUtlis.RemoveNanRows(final)
     return final    
 
 

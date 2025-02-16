@@ -115,6 +115,11 @@ def ColumnToArray(dt, cName):
 def RemoveRowIf(dt, column, val):
     return dt[dt[column] != val]
 
+def RemoveNanRows(final):
+    final = final.dropna(subset=['avg_lap_duration'])  # Drop rows where avg_lap_duration is NaN
+    return final
+
+
 # NEED TO RESTRUCTURE THE FUNC 
 # def GetAddColumnApi(sessionKey, cName):
 
