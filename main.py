@@ -34,10 +34,16 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 # while True:
 #     Algorithm.FullDataGatheringFunc()
 
-folders = DataUtlis.GetAllFolderNames()
-for f in folders:
-    df = Algorithm.LapsTimevsPosition(f)
-    corr = df['position'].corr(df['avg_lap_duration'])
+#To code list
+#Qualifying position vs. race result 
+
+# folders = DataUtlis.GetAllFolderNames()
+# for f in folders:
+#     print(f)
+#     df = Algorithm.LapsTimevsPosition(f)
+#     corr = df['position'].corr(df['avg_lap_duration'])
+#     # if corr < 0.5:
+#     print(corr)
     # print(f'{f}  {corr}')
     # print(df)
     # print()
@@ -52,7 +58,7 @@ for f in folders:
     # print(f'DriverNum: {driver}, Laps Count: {len(temp)}')
 
 
-# high = 'Spain_2024'
+# high = 'Netherlands_2024'
 # avg = 'Mexico_2024'
 # arr.append(avg)
 # arr.append(high)
@@ -77,7 +83,7 @@ for f in folders:
 # DO THIS AT NIGHT!
 # start = time.time()
 # while True:
-#     Algorithm.FullDataGatheringFunc()
+Algorithm.FullDataGatheringFunc()
 # end = time.time()
 # elapsedTime = end - start
 # print(f'TimeTaken: {elapsedTime}')

@@ -60,6 +60,7 @@ def LapsTimevsPosition(fileName):
 
     # higest lap
     winnerRow = posData[posData['position'] == 1]
+    print(winnerRow)
     winnerNum = winnerRow['driver_number'].values[0]
     highestLap = lapsDf[lapsDf['driver_number'] == winnerNum]['lap_number'].max()
 
@@ -75,6 +76,7 @@ def LapsTimevsPosition(fileName):
     # loop through driver num and check if na
     final = DataUtlis.RemoveNanRows(final)
     return final    
+
 
 
 #################### Looping Function  ####################
