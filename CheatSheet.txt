@@ -36,7 +36,8 @@ API Is not perfect
 
 !! TO CODE LIST !!
 
-Remove if DNF Func
+- Remove all the unwanted var
+- Add another var to the whole func
 
 --------------------------------------------------
 
