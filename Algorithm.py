@@ -23,6 +23,10 @@ def FullDataGatheringFunc():
     keysNum = len(keys)
     print(f'Race Count: {keysNum}')
     random.shuffle(keys)
+    # temp
+    # keys = []
+    # netherland 2024
+    # keys.append(9582)
     for i, key in enumerate(keys):
         # Create the file if it doesn't exist
         trackData = ApiUtlis.GetTrackData(key)
@@ -60,7 +64,8 @@ def LapsTimevsPosition(fileName):
 
     # higest lap
     winnerRow = posData[posData['position'] == 1]
-    print(winnerRow)
+    if winnerRow.empty:
+        return None
     winnerNum = winnerRow['driver_number'].values[0]
     highestLap = lapsDf[lapsDf['driver_number'] == winnerNum]['lap_number'].max()
 
@@ -75,6 +80,7 @@ def LapsTimevsPosition(fileName):
     final = final[['position', 'driver_number', 'avg_lap_duration']]
     # loop through driver num and check if na
     final = DataUtlis.RemoveNanRows(final)
+    final['track_name'] = fileName
     return final    
 
 
@@ -142,7 +148,7 @@ def LoopPitData(driver, raceName, key):
     path = os.path.join(subPath, fileName)
     if not DataUtlis.CheckIfFileExist(path):
         data = ApiUtlis.GetPitData(key, driver)
-        data = DataUtlis.RemoveRowIf(data, 'lap_number', 1)
+        # data = DataUtlis.RemoveRowIf(data, 'lap_number', 1)
         DataUtlis.ExportToExcel(fileName, data, raceName, folderName)
 
 def LoopMeetingData(raceName ,countryName, year):

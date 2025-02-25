@@ -14,6 +14,8 @@ Main Paper on google doc
 
 API Have Limitation
 - Use time.sleep() to over come the problem
+- Some of the data is incorrect
+    - Netherland 2024 - No winner
 
 Finding the r val
 

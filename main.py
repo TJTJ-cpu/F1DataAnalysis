@@ -29,24 +29,36 @@ data2 = [[30, 80], [31, 88], [33, 90], [35, 95]]
 fileName = random.choice(DataUtlis.GetAllFolderNames())
 # print(fileName)
 
+# for key in keys:
+#     dt = ApiUtlis.GetTrackData(key)
+#     print(dt)
 
 # TO GATHER ALL THE INFORMATION
 # while True:
-#     Algorithm.FullDataGatheringFunc()
+# Algorithm.FullDataGatheringFunc()
 
 #To code list
 #Qualifying position vs. race result 
 
-# folders = DataUtlis.GetAllFolderNames()
-# for f in folders:
-#     print(f)
-#     df = Algorithm.LapsTimevsPosition(f)
-#     corr = df['position'].corr(df['avg_lap_duration'])
-#     # if corr < 0.5:
-#     print(corr)
-    # print(f'{f}  {corr}')
-    # print(df)
-    # print()
+folders = DataUtlis.GetAllFolderNames()
+print(len(folders))
+corrDict = {}
+for f in folders:
+    df = Algorithm.LapsTimevsPosition(f)
+    if df is None:
+        print(f'{f} has no information')
+    else:
+        # print(f)
+        corr = df['position'].corr(df['avg_lap_duration'])
+        corrDict[f] = corr
+
+for x, y in corrDict.items():
+    print(x, y)
+
+# DataUtlis.DisplayGraph(lowCorrDf, "Low Corr")
+# DataUtlis.DisplayGraph(highCorrDf, "High Corr")
+# for x in lowCorrDf:
+#     print(x)
 
 # print(ApiUtlis.GetTrackData(key))
 # df = ApiUtlis.GetPositionData(key)
@@ -83,7 +95,7 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 # DO THIS AT NIGHT!
 # start = time.time()
 # while True:
-Algorithm.FullDataGatheringFunc()
+# Algorithm.FullDataGatheringFunc()
 # end = time.time()
 # elapsedTime = end - start
 # print(f'TimeTaken: {elapsedTime}')

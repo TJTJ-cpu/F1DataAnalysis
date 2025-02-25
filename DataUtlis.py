@@ -2,6 +2,7 @@ from os.path import isfile
 from urllib.request import HTTPError, urlopen
 from urllib.error import HTTPError
 from warnings import catch_warnings
+from matplotlib.colors import cnames
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -198,6 +199,17 @@ def UrlToDataFrame(url, retries=5, waitFactor=2):
 def ScatterPlot(df, val1, val2):
     df.plot.scatter(x=val1, y=val2)
 
+def DisplayGraph(arr, cName):
+    plt.figure(figsize=(10,6))
+    for idx, df in enumerate(arr):  
+        # plt.plot(df['position'], df['avg_lap_duration'], label=f'Dataset {idx+1}')
+        plt.scatter(df['position'], df['avg_lap_duration'], label=f"Dataset {idx+1}")
+    plt.xlabel("Position")
+    plt.ylabel("Average Lap Duration")
+    plt.title(f"{cName}")
+    plt.legend()  # Show legend with dataset names
+    plt.grid(True)
+    plt.show()
 
 #################### Date Formatting ####################
 

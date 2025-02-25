@@ -129,7 +129,7 @@ def GetRandomDriver(sessionKey):
 def GetTrackData(sessionKey):
     url = f'https://api.openf1.org/v1/sessions?session_key={sessionKey}'
     dt = UrlToDataFrame(url)
-    dt = dt[['date_start', 'country_name', 'circuit_short_name', 'year', 'session_type']]
+    dt = dt[['date_start', 'country_name', 'circuit_short_name', 'year', 'session_type', 'session_key']]
     return DataUtlis.FormatDate_DDMMYY(dt, 'date_start')
 
 def RandomSessionKey():
