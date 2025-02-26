@@ -69,6 +69,9 @@ def LapsTimevsPosition(fileName):
     winnerNum = winnerRow['driver_number'].values[0]
     highestLap = lapsDf[lapsDf['driver_number'] == winnerNum]['lap_number'].max()
 
+    lastLap = lapsDf.groupby('driver_number')['lap_number'].max()
+    finsihedDriver = lastLap[lastLap == highestLap].index
+
     lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
     lapsDf = lapsDf.dropna()
 
@@ -81,6 +84,7 @@ def LapsTimevsPosition(fileName):
     # loop through driver num and check if na
     final = DataUtlis.RemoveNanRows(final)
     final['track_name'] = fileName
+    final = final[final['driver_number'].isin(finsihedDriver)]
     return final    
 
 

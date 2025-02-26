@@ -51,9 +51,30 @@ for f in folders:
         # print(f)
         corr = df['position'].corr(df['avg_lap_duration'])
         corrDict[f] = corr
+        if corr < 0:
+            print(f)
+            print(df)
+            print('-----------------------------------------------------------------')
 
-for x, y in corrDict.items():
-    print(x, y)
+# Sample data
+correlations = list(corrDict.values())
+
+# Color based on correlation sign
+folders = list(corrDict.keys())
+colors = ['red' if c < 0 else 'blue' for c in correlations]
+
+plt.figure(figsize=(10, 6))
+plt.bar(folders, correlations, color=colors)
+plt.axhline(0, color='black', linewidth=1)  # Add a horizontal line at y=0
+
+plt.xlabel("Race Events")
+plt.ylabel("Correlation (-1 to 1)")
+plt.title("Correlation Between Position and Avg Lap Duration")
+plt.xticks(rotation=45, ha='right')
+plt.ylim(-1, 1)  # Set y-axis limit
+
+plt.show()
+
 
 # DataUtlis.DisplayGraph(lowCorrDf, "Low Corr")
 # DataUtlis.DisplayGraph(highCorrDf, "High Corr")
