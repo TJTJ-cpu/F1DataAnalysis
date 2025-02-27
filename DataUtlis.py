@@ -211,6 +211,25 @@ def DisplayGraph(arr, cName):
     plt.grid(True)
     plt.show()
 
+def DisplayLineGraph(cDict, cName):
+    correlations = list(cDict.values())
+    folders = list(cDict.keys())
+
+    colors = ['red' if c < 0 else 'blue' for c in correlations]
+
+    plt.figure(figsize=(9, 9))
+    plt.bar(folders, correlations, color=colors)
+    plt.axhline(0, color='black', linewidth=1)  
+
+    plt.xlabel("Race Events")
+    plt.ylabel("Correlation (-1 to 1)")
+    plt.title(cName)
+    plt.xticks(rotation=45, ha='right')
+    plt.ylim(-0.5, 1)  
+
+    plt.show()
+
+
 #################### Date Formatting ####################
 
 def FormatDate_DDMMYY(data, cName):

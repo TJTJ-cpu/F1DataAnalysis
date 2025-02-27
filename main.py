@@ -41,39 +41,46 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 #Qualifying position vs. race result 
 
 folders = DataUtlis.GetAllFolderNames()
-print(len(folders))
+# print(f'Folders: {len(folders)}')
 corrDict = {}
+spearDict = {}
+kendallDict = {}
 for f in folders:
     df = Algorithm.LapsTimevsPosition(f)
     if df is None:
         print(f'{f} has no information')
+        print()
     else:
         # print(f)
         corr = df['position'].corr(df['avg_lap_duration'])
+        spearCorr = df['position'].corr(df['avg_lap_duration'], method='spearman')
+        kendallCorr = df['position'].corr(df['avg_lap_duration'], method='kendall')
         corrDict[f] = corr
-        if corr < 0:
-            print(f)
-            print(df)
-            print('-----------------------------------------------------------------')
+        spearDict[f] = corr
+        kendallDict[f] = corr
+        print(f)
+        time.sleep(3)
+        print(f'Pearson: {corr}')
+        time.sleep(1)
+        print(f'Spearman: {spearCorr}')
+        time.sleep(1)
+        print(f'Kendall: {kendallCorr}')
+        time.sleep(1)
+        print()
+        # print(corr)
+        # if corr > -0.5:
+        # else:
+            # print(f)
+            # print(df)
+            # print(corr)
+            # print('-----------------------------------------------------------------')
 
-# Sample data
+
 correlations = list(corrDict.values())
-
-# Color based on correlation sign
-folders = list(corrDict.keys())
-colors = ['red' if c < 0 else 'blue' for c in correlations]
-
-plt.figure(figsize=(10, 6))
-plt.bar(folders, correlations, color=colors)
-plt.axhline(0, color='black', linewidth=1)  # Add a horizontal line at y=0
-
-plt.xlabel("Race Events")
-plt.ylabel("Correlation (-1 to 1)")
-plt.title("Correlation Between Position and Avg Lap Duration")
-plt.xticks(rotation=45, ha='right')
-plt.ylim(-1, 1)  # Set y-axis limit
-
-plt.show()
+# Sample data
+DataUtlis.DisplayLineGraph(corrDict, 'Pearson: Between Position vs Avg Lap Duration')
+DataUtlis.DisplayLineGraph(spearDict, 'Spearman: Between Position vs Avg Lap Duration')
+DataUtlis.DisplayLineGraph(kendallDict, 'Kendall: Between Position vs Avg Lap Duration')
 
 
 # DataUtlis.DisplayGraph(lowCorrDf, "Low Corr")
