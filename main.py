@@ -68,6 +68,8 @@ for f in folders:
         time.sleep(1)
         print()
         # print(corr)
+        # Bandate for this situation
+        # Remove the 2 that we did not want anyway
         # if corr > -0.5:
         # else:
             # print(f)
