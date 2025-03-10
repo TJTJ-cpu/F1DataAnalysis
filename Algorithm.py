@@ -60,24 +60,13 @@ def FullDataGatheringFunc():
 
 def RainvsDriver(fileName):
     lapsDf = DataUtlis.ReadLapsData(fileName)
+    posData = DataUtlis.ReadFinalPosition(fileName)
     weatherData = DataUtlis.ReadWeatherData(fileName)
 
-    # print(weatherData.columns)
-    # print(weatherData['air_temperature][1])
     temp = weatherData['air_temperature'].mean()
     # print(f'{fileName} - Temp: {temp}')
     # print(temp)
-    return temp
-    if temp > 20:
-        print(f'{fileName} - Temp: {temp}')
-        # print(weatherData['rainfall'])
-    
-    # if weatherData['rainfall'] < 0:
-    #     return fileName 
-    return None
-    posData = DataUtlis.ReadFinalPosition(fileName)
 
-    # higest lap
     winnerRow = posData[posData['position'] == 1]
     if winnerRow.empty:
         return None
@@ -87,13 +76,20 @@ def RainvsDriver(fileName):
     lastLap = lapsDf.groupby('driver_number')['lap_number'].max()
     finsihedDriver = lastLap[lastLap == highestLap].index
 
-    lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
+    lapsDf = lapsDf[['lap_number', 'driver_number' ]]
     lapsDf = lapsDf.dropna()
+
+    final = DataUtlis.MergeDataFrame(posData, lapsDf, 'driver_number')
+    final['air_temperature'] = temp
+    print(final)
+
+    return final
 
 
 def LapsTimevsPosition(fileName):
     lapsDf = DataUtlis.ReadLapsData(fileName)
     posData = DataUtlis.ReadFinalPosition(fileName)
+    weatherData = DataUtlis.ReadWeatherData(fileName)
 
     # higest lap
     winnerRow = posData[posData['position'] == 1]
@@ -107,6 +103,9 @@ def LapsTimevsPosition(fileName):
 
     lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
     lapsDf = lapsDf.dropna()
+
+    # AVERAGE TEMPERATURE
+    temp = weatherData['air_temperature'].mean()
 
     # GET AVG
     lapsDf = lapsDf.groupby('driver_number', as_index=False)['lap_duration'].mean()
@@ -118,6 +117,7 @@ def LapsTimevsPosition(fileName):
     final = DataUtlis.RemoveNanRows(final)
     final['track_name'] = fileName
     final = final[final['driver_number'].isin(finsihedDriver)]
+    final['air_temperature'] = temp
     return final    
 
 

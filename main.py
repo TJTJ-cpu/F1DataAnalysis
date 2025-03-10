@@ -52,11 +52,12 @@ kendallDict = {}
 raceTemp = {}
 for f in folders:
     df = Algorithm.LapsTimevsPosition(f)
-    temp = Algorithm.RainvsDriver(f)
-    raceTemp[f] = temp
-print('in dict')
-for val in raceTemp.values():
-    print(val)
+    # temp = Algorithm.RainvsDriver(f)
+    print(df)
+    # raceTemp[f] = temp
+# print('in dict')
+# for val in raceTemp.values():
+#     print(val)
     # print(df)
     # if df is None:
     #     print(f'{f} has no information')
@@ -92,10 +93,10 @@ for val in raceTemp.values():
 
 
 correlations = list(corrDict.values())
-# Sample data
-DataUtlis.DisplayLineGraph(corrDict, 'Pearson: Between Position vs Avg Lap Duration')
-DataUtlis.DisplayLineGraph(spearDict, 'Spearman: Between Position vs Avg Lap Duration')
-DataUtlis.DisplayLineGraph(kendallDict, 'Kendall: Between Position vs Avg Lap Duration')
+# Sample Graph
+# DataUtlis.DisplayLineGraph(corrDict, 'Pearson: Between Position vs Avg Lap Duration')
+# DataUtlis.DisplayLineGraph(spearDict, 'Spearman: Between Position vs Avg Lap Duration')
+# DataUtlis.DisplayLineGraph(kendallDict, 'Kendall: Between Position vs Avg Lap Duration')
 
 
 # DataUtlis.DisplayGraph(lowCorrDf, "Low Corr")
