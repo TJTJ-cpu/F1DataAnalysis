@@ -24,6 +24,16 @@ def ReadFinalPosition(fileName):
     path = os.path.join(root, fileName, cat, 'FinalPosition.xlsx')
     return pd.read_excel(path)
 
+def ReadWeatherData(fileName):
+    root = 'Data'
+    cat = 'Weather'
+    oriPath = os.path.join(root, fileName, cat)
+    arr = ShowAllFile(oriPath)
+
+    df = pd.DataFrame()
+    path = os.path.join(oriPath, f'WeatherData.xlsx')
+    df = pd.read_excel(path)
+    return df
 
 def ReadLapsData(fileName, driverNum = None):
     root = 'Data'

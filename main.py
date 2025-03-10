@@ -14,8 +14,9 @@ import os
 import random
 
 #GET RANDOM SESSION KEY
-keys = ApiUtlis.GetAllSessionKeys()
-key = random.choice(keys)
+
+# keys = ApiUtlis.GetAllSessionKeys()
+# key = random.choice(keys)
 
 
 # Age and Weight
@@ -31,11 +32,14 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 
 # for key in keys:
 #     dt = ApiUtlis.GetTrackData(key)
+
 #     print(dt)
 
 # TO GATHER ALL THE INFORMATION
 # while True:
 # Algorithm.FullDataGatheringFunc()
+
+
 
 #To code list
 #Qualifying position vs. race result 
@@ -45,28 +49,37 @@ folders = DataUtlis.GetAllFolderNames()
 corrDict = {}
 spearDict = {}
 kendallDict = {}
+raceTemp = {}
 for f in folders:
     df = Algorithm.LapsTimevsPosition(f)
-    if df is None:
-        print(f'{f} has no information')
-        print()
-    else:
-        # print(f)
-        corr = df['position'].corr(df['avg_lap_duration'])
-        spearCorr = df['position'].corr(df['avg_lap_duration'], method='spearman')
-        kendallCorr = df['position'].corr(df['avg_lap_duration'], method='kendall')
-        corrDict[f] = corr
-        spearDict[f] = corr
-        kendallDict[f] = corr
-        print(f)
-        time.sleep(3)
-        print(f'Pearson: {corr}')
-        time.sleep(1)
-        print(f'Spearman: {spearCorr}')
-        time.sleep(1)
-        print(f'Kendall: {kendallCorr}')
-        time.sleep(1)
-        print()
+    temp = Algorithm.RainvsDriver(f)
+    raceTemp[f] = temp
+print('in dict')
+for val in raceTemp.values():
+    print(val)
+    # print(df)
+    # if df is None:
+    #     print(f'{f} has no information')
+    #     print()
+    # else:
+    #     # print(f)
+    #     corr = df['position'].corr(df['avg_lap_duration'])
+    #     spearCorr = df['position'].corr(df['avg_lap_duration'], method='spearman')
+    #     kendallCorr = df['position'].corr(df['avg_lap_duration'], method='kendall')
+    #     corrDict[f] = corr
+    #     spearDict[f] = corr
+    #     kendallDict[f] = corr
+    #     print(f)
+    #     time.sleep(3)
+    #     print(f'Pearson: {corr}')
+    #     time.sleep(1)
+    #     print(f'Spearman: {spearCorr}')
+    #     time.sleep(1)
+    #     print(f'Kendall: {kendallCorr}')
+    #     time.sleep(1)
+    #     print()
+
+
         # print(corr)
         # Bandate for this situation
         # Remove the 2 that we did not want anyway

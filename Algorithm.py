@@ -58,6 +58,39 @@ def FullDataGatheringFunc():
         # Drivers
     return
 
+def RainvsDriver(fileName):
+    lapsDf = DataUtlis.ReadLapsData(fileName)
+    weatherData = DataUtlis.ReadWeatherData(fileName)
+
+    # print(weatherData.columns)
+    # print(weatherData['air_temperature][1])
+    temp = weatherData['air_temperature'].mean()
+    # print(f'{fileName} - Temp: {temp}')
+    # print(temp)
+    return temp
+    if temp > 20:
+        print(f'{fileName} - Temp: {temp}')
+        # print(weatherData['rainfall'])
+    
+    # if weatherData['rainfall'] < 0:
+    #     return fileName 
+    return None
+    posData = DataUtlis.ReadFinalPosition(fileName)
+
+    # higest lap
+    winnerRow = posData[posData['position'] == 1]
+    if winnerRow.empty:
+        return None
+    winnerNum = winnerRow['driver_number'].values[0]
+    highestLap = lapsDf[lapsDf['driver_number'] == winnerNum]['lap_number'].max()
+
+    lastLap = lapsDf.groupby('driver_number')['lap_number'].max()
+    finsihedDriver = lastLap[lastLap == highestLap].index
+
+    lapsDf = lapsDf[['lap_duration', 'lap_number', 'driver_number' ]]
+    lapsDf = lapsDf.dropna()
+
+
 def LapsTimevsPosition(fileName):
     lapsDf = DataUtlis.ReadLapsData(fileName)
     posData = DataUtlis.ReadFinalPosition(fileName)

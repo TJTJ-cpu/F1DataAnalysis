@@ -36,10 +36,15 @@ API Is not perfect
 
 --------------------------------------------------
 
-!! TO CODE LIST !!
+!! TO CODE LIST !! 
 
-- Remove all the unwanted var
-- Add another var to the whole func
+!!!Rain vs Driver
+
+- Get Average temp of the track
+- Get all the driver and their position
+- Dict [Temp, DriverNum, DrrverPosition]
+- Find out how to find the corr
+- Subdivide into category
 
 --------------------------------------------------
 
