@@ -49,13 +49,61 @@ folders = DataUtlis.GetAllFolderNames()
 corrDict = {}
 spearDict = {}
 kendallDict = {}
-raceTemp = {}
+all_data = []
 for f in folders:
     df = Algorithm.LapsTimevsPosition(f)
-    # temp = Algorithm.RainvsDriver(f)
-    print(df)
-    # raceTemp[f] = temp
-# print('in dict')
+    all_data.append(df)
+    # print(df)
+
+# find avg pos and high low temperature
+final_df = pd.concat(all_data, ignore_index=True)
+median_temp = final_df['air_temperature'].median()
+
+# print(f'median temp: {median_temp}')
+final_df['temperature'] = final_df['air_temperature'].apply(lambda x: 'High' if x > median_temp else 'Low')
+
+# get avg finish p;os
+driver_performance = final_df.groupby(['driver_number', 'temperature'])['position'].mean().reset_index()
+
+driverDf = driver_performance.pivot(index='driver_number', columns='temperature', values='position')
+# Fill missing values in case a driver didn't race in both conditions
+driverDf = driverDf.fillna(np.nan)
+driverDf.reset_index(inplace=True)
+
+# name
+driver_names = ApiUtlis.driver_names
+driverDf['Driver Name'] = driverDf['driver_number'].map(driver_names)
+
+# add diff column
+driverDf['Performance_Difference'] = driverDf['Low'] - driverDf['High']
+
+# Display the updated DataFrame
+
+# Sort drivers by performance difference (ascending)
+driverDf_sorted = driverDf.sort_values(by='Performance_Difference', ascending=True)
+print('here')
+print(driverDf)
+print('here2')
+
+
+# visualization
+driver_pivot_sorted = driverDf.sort_values(by='Performance_Difference', ascending=True)
+
+# Define colors: Red = better in hot weather, Blue = better in cold weather
+colors = ['red' if x < 0 else 'blue' for x in driver_pivot_sorted['Performance_Difference']]
+
+# Plot Horizontal Bar Chart
+plt.figure(figsize=(10, 6))
+plt.barh(driver_pivot_sorted.index, driver_pivot_sorted['Performance_Difference'], color=colors)
+
+plt.axvline(0, color='black', linewidth=1)  # Reference line at 0
+plt.xlabel("Performance Difference (Low Temp - High Temp)")
+plt.ylabel("Driver Number")
+plt.title("Which Drivers Perform Better in Hot vs. Cold Weather?")
+
+plt.show()
+
+
 # for val in raceTemp.values():
 #     print(val)
     # print(df)
