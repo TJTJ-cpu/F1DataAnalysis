@@ -44,6 +44,7 @@ fileName = random.choice(DataUtlis.GetAllFolderNames())
 #To code list
 #Qualifying position vs. race result 
 
+# need improvement
 folders = DataUtlis.GetAllFolderNames()
 # print(f'Folders: {len(folders)}')
 corrDict = {}
