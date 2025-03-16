@@ -20,6 +20,10 @@ pip install matplotlib
 pip install seaborn
 pip install scipy
 ```
+Install Everything in Onliner
+```console
+pip install pandas matplotlib seaborn scipy
+```
 
 # Process
 ## 📥 Data Gathering  
