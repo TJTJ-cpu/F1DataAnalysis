@@ -13,48 +13,47 @@ import time
 import os
 import random
 
-#GET RANDOM SESSION KEY
+Algorithm.FullDataGatheringFunc()
 
-# keys = ApiUtlis.GetAllSessionKeys()
-# key = random.choice(keys)
-
-
-# Age and Weight
-data = [[12, 42], [13, 46], [14, 48], [15, 52], [16, 54], [17, 54], [18, 57], [19, 57], [20, 58]]
-
-data2 = [[30, 80], [31, 88], [33, 90], [35, 95]]
-
-# data = ApiUtlis.GetALlDriverNumber(key)
-# driver = random.choice(data)
-
-fileName = random.choice(DataUtlis.GetAllFolderNames())
-# print(fileName)
-
-# for key in keys:
-#     dt = ApiUtlis.GetTrackData(key)
-
-#     print(dt)
-
-# TO GATHER ALL THE INFORMATION
-# while True:
-# Algorithm.FullDataGatheringFunc()
-
-
-
-#To code list
-#Qualifying position vs. race result 
-
-# need improvement
 folders = DataUtlis.GetAllFolderNames()
 # print(f'Folders: {len(folders)}')
 corrDict = {}
 spearDict = {}
 kendallDict = {}
 all_data = []
+
 for f in folders:
     df = Algorithm.LapsTimevsPosition(f)
+
+    if df is None:
+        print("-" * 50)
+        print(f'{f} has no data')
+        print("-" * 50)
+        continue
+
     all_data.append(df)
-    # print(df)
+
+    # Calculate Correlations
+    pearson_corr = df['position'].corr(df['avg_lap_duration'], method='pearson')
+    spearman_corr = df['position'].corr(df['avg_lap_duration'], method='spearman')
+    kendall_corr = df['position'].corr(df['avg_lap_duration'], method='kendall')
+
+    # Store data in dict
+    corrDict[f] = pearson_corr
+    spearDict[f] = spearman_corr
+    kendallDict[f] = kendall_corr
+
+    print("-" * 50)
+    print(f"Track: {f}")
+    print(f"Pearson: {pearson_corr:.4f}")
+    print(f"Spearman: {spearman_corr:.4f}")
+    print(f"Kendall: {kendall_corr:.4f}")
+    print("-" * 50)
+# Sample Graph
+DataUtlis.DisplayLineGraph(corrDict, 'Pearson: Between Position vs Avg Lap Duration')
+DataUtlis.DisplayLineGraph(spearDict, 'Spearman: Between Position vs Avg Lap Duration')
+DataUtlis.DisplayLineGraph(kendallDict, 'Kendall: Between Position vs Avg Lap Duration')
+
 
 # find avg pos and high low temperature
 final_df = pd.concat(all_data, ignore_index=True)
@@ -82,9 +81,7 @@ driverDf['Performance_Difference'] = driverDf['Low'] - driverDf['High']
 
 # Sort drivers by performance difference (ascending)
 driverDf_sorted = driverDf.sort_values(by='Performance_Difference', ascending=True)
-print('here')
 print(driverDf)
-print('here2')
 
 
 # visualization
@@ -107,42 +104,42 @@ plt.show()
 
 # for val in raceTemp.values():
 #     print(val)
-    # print(df)
-    # if df is None:
-    #     print(f'{f} has no information')
-    #     print()
-    # else:
-    #     # print(f)
-    #     corr = df['position'].corr(df['avg_lap_duration'])
-    #     spearCorr = df['position'].corr(df['avg_lap_duration'], method='spearman')
-    #     kendallCorr = df['position'].corr(df['avg_lap_duration'], method='kendall')
-    #     corrDict[f] = corr
-    #     spearDict[f] = corr
-    #     kendallDict[f] = corr
-    #     print(f)
-    #     time.sleep(3)
-    #     print(f'Pearson: {corr}')
-    #     time.sleep(1)
-    #     print(f'Spearman: {spearCorr}')
-    #     time.sleep(1)
-    #     print(f'Kendall: {kendallCorr}')
-    #     time.sleep(1)
-    #     print()
-
-
-        # print(corr)
-        # Bandate for this situation
-        # Remove the 2 that we did not want anyway
-        # if corr > -0.5:
-        # else:
-            # print(f)
-            # print(df)
-            # print(corr)
-            # print('-----------------------------------------------------------------')
-
-
-correlations = list(corrDict.values())
-# Sample Graph
+#     print(df)
+#     if df is None:
+#         print(f'{f} has no information')
+#         print()
+#     else:
+#         # print(f)
+#         corr = df['position'].corr(df['avg_lap_duration'])
+#         spearCorr = df['position'].corr(df['avg_lap_duration'], method='spearman')
+#         kendallCorr = df['position'].corr(df['avg_lap_duration'], method='kendall')
+#         corrDict[f] = corr
+#         spearDict[f] = corr
+#         kendallDict[f] = corr
+#         print(f)
+#         time.sleep(3)
+#         print(f'Pearson: {corr}')
+#         time.sleep(1)
+#         print(f'Spearman: {spearCorr}')
+#         time.sleep(1)
+#         print(f'Kendall: {kendallCorr}')
+#         time.sleep(1)
+#         print()
+#
+#
+#         print(corr)
+#         Bandate for this situation
+#         Remove the 2 that we did not want anyway
+#         if corr > -0.5:
+#         else:
+#             print(f)
+#             print(df)
+#             print(corr)
+#             print('-----------------------------------------------------------------')
+#
+#
+# correlations = list(corrDict.values())
+# # Sample Graph
 # DataUtlis.DisplayLineGraph(corrDict, 'Pearson: Between Position vs Avg Lap Duration')
 # DataUtlis.DisplayLineGraph(spearDict, 'Spearman: Between Position vs Avg Lap Duration')
 # DataUtlis.DisplayLineGraph(kendallDict, 'Kendall: Between Position vs Avg Lap Duration')
