@@ -8,7 +8,7 @@ The goal is to use the open-source F1 API [OpenF1](https://openf1.org/) to colle
 - [Data Cleaning](#-data-cleaning)
 - [Correlation Analysis](#-correlation-analysis)
 - [Data Visualization](#-data-visualization)
-- [Requirements](#-requirements)
+- [Requirements](#%EF%B8%8F-requirements)
 
 # Process
 ## 📥 Data Gathering  
