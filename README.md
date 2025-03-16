@@ -3,12 +3,23 @@ This is a small project for F1 Data Analysis.
 The goal is to use the open-source F1 API [OpenF1](https://openf1.org/) to collect, clean, analyze, and visualize F1 data.
 
 ## 📖 Table of Contents
+- [Requirements](#%EF%B8%8F-requirements)
 - [Process](#process)
 - [Data Gathering](#-data-gathering)
 - [Data Cleaning](#-data-cleaning)
 - [Correlation Analysis](#-correlation-analysis)
 - [Data Visualization](#-data-visualization)
-- [Requirements](#%EF%B8%8F-requirements)
+
+
+# ⚙️ Requirements
+Ensure you have Python installed, then install these required packages:
+
+```console
+pip install pandas
+pip install matplotlib
+pip install seaborn
+pip install scipy
+```
 
 # Process
 ## 📥 Data Gathering  
@@ -26,16 +37,6 @@ Fetching race data using OpenF1 API to excel.
 ## 📉 Data Visualization
 - Creating **graphs and tables** to make insights easy to understand.
 - Using **Matplotlib** for visualization.
-
-# ⚙️ Requirements
-Ensure you have Python installed, then install these required packages:
-
-```console
-pip install pandas
-pip install matplotlib
-pip install seaborn
-pip install scipy
-```
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/tungjai-mady/)
 
